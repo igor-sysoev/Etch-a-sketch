@@ -6,19 +6,90 @@
 	<meta charset="utf-8">
 </head>
 <body>
+	<button id="btn">Generate new grid</button>
+	<button id="clear" onclick="clearGrid()">Clear</button>
+
+<div class="grid-container">
 
 
-
-
-
+</div>
 
 
 
 <script type="text/javascript">
-	
+	const gridContainer = document.querySelector('.grid-container')
+ 	const grid = document.createElement('div');
+ 	const btn = document.querySelector('#btn');
+ 	const clearBtn = document.querySelector('#clear');
+ 	const divs = document.querySelectorAll("div");
+ 	let squaresPerSide;
+
+ 	function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var b = 0; b < 6; b++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function removeGrid(){
+	  oldGrid = document.getElementsByClassName('grid');
+	  while(oldGrid[0]){
+	  	oldGrid[0].remove();
+	  }
+}
+
+function clearGrid() {
+	removeGrid();
+ buildGrid(squaresPerSide);
+}
+
+function buildGrid(squares) {
+	    let totalSquares = squares * squares;
+	    let sideLength = (600 / squares) + 'px';
+    	for(let a = 0; a < totalSquares; a++){
+           	const grid = document.createElement('div');
+           	gridContainer.appendChild(grid);
+           	grid.classList.add('grid');
+           	grid.style.width = sideLength;
+           	grid.style.height= sideLength;
+    	};
+    	if(squares < 1 || squares == null || squares == " ") {
+    		alert("ERROR! Please enter a valid number!");
+    		return buildGrid(16);
+    	}
+    };
 
 
 
+
+divs.forEach((div) => {
+	div.addEventListener('mouseover', (e) => {
+	   e.target.style.backgroundColor = getRandomColor();
+	});
+});
+
+
+grid.addEventListener('mouseover', (e) =>{
+	grid.textContent = "blackman";
+})
+
+
+// buttons
+
+btn.addEventListener('click', (e) => {
+	squaresPerSide = prompt('How many squares per side?');
+    removeGrid();
+	buildGrid(squaresPerSide);
+
+})
+  
+
+// runs at start
+
+squaresPerSide = 16
+buildGrid(squaresPerSide);  
 </script>
 
 
